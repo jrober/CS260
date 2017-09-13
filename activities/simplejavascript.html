@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>I really love odd numbers don't you??</h1>
+
+<p>Increment or decrement by two with the buttons below</p>
+
+<button type="button" onclick="decFunction()">Decrement</button>
+
+<button type="button" onclick="incFunction()">Increment</button>
+
+
+<p id="demo">3</p>
+
+<script>
+function decFunction() {
+    var x;
+    var newNum;
+
+    // Get the value of the input field with id="numb"
+    x = document.getElementById("demo").innerHTML;
+    //var titleNodeList = document.getElementsByTagname('demo');
+    //var firstTitle = titleNodeList[0];
+    //var x = firstTitle.firstChild;
+
+    // If x is Not a Number or less than one or greater than 10
+    //if (x == null)
+    //{
+    //    newNum = 3;
+    //} else {
+        newNum = parseInt(x) - 2;
+    //}
+    document.getElementById("demo").innerHTML = newNum;
+}
+function incFunction() {
+    var x;
+    var newNum;
+
+    // Get the value of the input field with id="numb"
+    x = document.getElementById("demo").innerHTML;
+
+    // If x is Not a Number or less than one or greater than 10
+    //if (x == null)
+    //{
+    //    newNum = 3;
+    //} else {
+        newNum = parseInt(x) + 2;
+    //}
+    document.getElementById("demo").innerHTML = newNum;
+}
+</script>
+
+</body>
+</html> 
