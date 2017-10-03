@@ -1,0 +1,64 @@
+<html>
+<head>
+<title>Api Test</title>
+<link rel="Stylesheet" type="text/css" href="glassfox.css" />
+<script
+  src="http://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous">
+</script>
+
+
+
+</head>
+
+<body>
+
+  <div id="page">
+    <h1 style="padding-top:50px">API Test Page</h1>
+
+    <div class="floatBox">
+      <div>
+        <form>
+          <h2>Google Geocodeing and Maps (Location or Address): </h2>
+          <input type="text" id="GG_input" value="Provo, UT" class="right">
+          <input id="GG_button" type="submit" value="Submit" class="right"><br>
+        </form>
+        <div id="GG_results">No results</div>
+        <div id="map"></div>
+        <div id="WU_results"></div>
+      </div>
+    </div></br>
+
+    <div class="floatBox">
+      <div>
+        <form>
+          <h2 id="YT_header">Youtube Videos</h2>
+          <p>Search</p>
+          <input type="text" id="YT_input" value="cat" class="right">
+          <input id="YT_button" type="submit" value="Submit" class="right"><br>
+        </form>
+        <div id="YT_results">No results</div>
+      </div>
+    </div></br>
+
+    <div class="floatBox">
+      <div>
+        <form>
+          <h2>Stackoverflow (Question Search): </h2>
+          <input type="text" id="SO_input" value="CSS" class="right">
+          <input id="SO_button" type="submit" value="Submit" class="right"><br>
+        </form>
+        <div id="SO_results">No results</div>
+      </div>
+    </div></br>
+
+  </div>
+</body>
+
+<script src="jqueryJustins.js"></script>  
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBW7MzBq1JwCe6Jv-uViDGjvs8rK5jE4wo&callback=initMap"></script>
+
+
+
+</html>
