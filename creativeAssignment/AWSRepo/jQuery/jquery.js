@@ -54,8 +54,8 @@ $(document).ready(function() {
       resultList += iframe + "<br>";
 
       $("#GG_results").html(resultList);
-      $("#results").slideDown();
       $("#forms").hide();
+      $("#results").fadeIn(4000);
       youtube();
     });
   });
@@ -85,7 +85,7 @@ $(document).ready(function() {
   }
 
   function setHints() {
-    var random = Math.floor(Math.random() * 4);
+    var random = Math.floor(Math.random() * 7);
 
     switch (random) {
       case 0:
@@ -104,6 +104,18 @@ $(document).ready(function() {
         $("#YT_input1").attr('placeholder', 'Batman');
         $("#YT_input2").attr('placeholder', 'Superman');
         break;
+      case 4:
+        $("#YT_input1").attr('placeholder', 'Coke');
+        $("#YT_input2").attr('placeholder', 'Pepsi');
+        break;
+      case 5:
+        $("#YT_input1").attr('placeholder', 'iPhone');
+        $("#YT_input2").attr('placeholder', 'Android');
+        break;
+      case 6:
+        $("#YT_input1").attr('placeholder', 'Red');
+        $("#YT_input2").attr('placeholder', 'Blue');
+        break;
     }
   }
 
@@ -113,22 +125,19 @@ $(document).ready(function() {
     var input1 = encodeURIComponent($("#YT_input1").val());
     var input2 = encodeURIComponent($("#YT_input2").val());
     var radius = $("#radius").val() + "mi";
-    $("#resultBox").show();
 
     // build API URL for input 1
-    var url1 = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=3&key=AIzaSyBW7MzBq1JwCe6Jv-uViDGjvs8rK5jE4wo";
+    var url1 = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=10&key=AIzaSyBW7MzBq1JwCe6Jv-uViDGjvs8rK5jE4wo";
     url1 += "&q=" + input1;
     if (coords !== "") {
-      $("#YT_header").html("Youtube Videos within " + radius + " of " + full_address);
       url1 += "&location=" + coords + "&locationRadius=" + radius;
     }
     console.log("API URL:" + url1);
 
     // build API URL for input 2
-    var url2 = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=3&key=AIzaSyBW7MzBq1JwCe6Jv-uViDGjvs8rK5jE4wo";
+    var url2 = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=10&key=AIzaSyBW7MzBq1JwCe6Jv-uViDGjvs8rK5jE4wo";
     url2 += "&q=" + input2;
     if (coords !== "") {
-      $("#YT_header").html("Youtube Videos within " + radius + " of " + full_address);
       url2 += "&location=" + coords + "&locationRadius=" + radius;
     }
     console.log("API URL:" + url2);
@@ -144,7 +153,7 @@ $(document).ready(function() {
     // JSON url1
     $.getJSON(url1, function(data1) {
       resultCount1 = data1["pageInfo"]["totalResults"];
-      resultList1 = "<ul><li>Total Results: " + resultCount1 + "</li>";
+      resultList1 = "<ul><b>Check out these " + input1 + " videos from within " + radius + "miles!</b><li></li>";
 
       for (var i = 0; i < data1["items"].length; i++) {
         resultList1 += "<li><b>Title: </b>" + data1["items"][i]["snippet"]["title"] + "<br>";
@@ -159,7 +168,7 @@ $(document).ready(function() {
     // JSON url2
     $.getJSON(url2, function(data2) {
       resultCount2 = data2["pageInfo"]["totalResults"];
-      resultList2 = "<ul><li>Total Results: " + resultCount2 + "</li>";
+      resultList2 = "<ul><b>Check out these " + input2 + " videos from within " + radius + "</b><li></li>";
 
       for (var i = 0; i < data2["items"].length; i++) {
         resultList2 += "<li><b>Title: </b>" + data2["items"][i]["snippet"]["title"] + "<br>";
@@ -177,20 +186,35 @@ $(document).ready(function() {
       async: true
     });
 
+    buildBar(input1, resultCount1, input2, resultCount2);
+
     if (resultCount1 > resultCount2) {
-      stringBuild = "<h1>"+input1+" wins with "+ resultCount1 + " results</h1>";
+      stringBuild = "<h1>"+input1+" wins!</h1>";
       $("#Match_results").html(stringBuild);
       $("#YT_results").html(resultList1);
-    }    else {
-      stringBuild = "<h1>"+input2+" wins with "+ resultCount2 + " results</h1>";
+    }
+    else {
+      stringBuild = "<h1>"+input2+" wins!</h1>";
       $("#Match_results").html(stringBuild);
       $("#YT_results").html(resultList2);
     }
 
   }
 
-  $("#YT_button").click(function(e){
-    e.preventDefault();
-    youtube();
+  function buildBar (leftName, left, rightName, right) {
+    var inc = 100 / (left + right);
+    $("#left_bar").css("width", inc * left + "%");
+    $("#left_bar").html("&nbsp&nbsp" + leftName + ": " + left);
+    $("#right_bar").css("width", inc * right + "%");
+    $("#right_bar").html(rightName + ": " + right + "&nbsp&nbsp");
+  }
+
+  $("#results").click(function(){
+    $("#resultBox").slideDown();
+    $("#search").hide();
+  });
+
+  $("#resultBox").click(function(){
+    location.reload();
   });
 });
