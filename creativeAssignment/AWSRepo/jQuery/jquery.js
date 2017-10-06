@@ -1,13 +1,25 @@
 
 $(document).ready(function() {
 
+  setHints();
   var address = "";
   var full_address = "";
   var coords = "";
 
   $("#GG_button").click(function(e){
+    console.log("Clicked submit");
+    e.preventDefault();
+
     // get input
+    var input1 = encodeURIComponent($("#YT_input1").val());
+    var input2 = encodeURIComponent($("#YT_input2").val());
     address = encodeURIComponent($("#GG_input").val());
+
+    if (!validateInput()){
+      console.log("Invalid input");
+      return;
+    }
+
     console.log("Google Geocoding and Maps")
     console.log("Input: " + address);
     e.preventDefault();
@@ -26,112 +38,159 @@ $(document).ready(function() {
       coords = lat + "," + long;
 
       var iframe = "<iframe ";
-      iframe += "width=\"600\"";
-      iframe += "height=\"450\"";
+      iframe += "width=\"100%\"";
+      iframe += "height=\"50%\"";
       iframe += "frameborder=\"0\"";
-      iframe += "style=\"border:0\"";
+      iframe += "style=\"border:0;\"";
       iframe += "src=\"https://www.google.com/maps/embed/v1/place?";
       iframe += "key=AIzaSyBW7MzBq1JwCe6Jv-uViDGjvs8rK5jE4wo";
+      iframe += "&maptype=satellite";
       iframe += "&q=" + address;
-      iframe += "\" allowfullscreen></iframe>";
+      iframe += "\"></iframe>";
       console.log(iframe);
 
-      var resultList = "<ul>";
-      resultList += "<li><h2>" + full_address + "</h2></li>";
-      resultList += "<li>Coords: " + coords + "</li>";
-      resultList += "<li>" + iframe + "</li>";
+      var resultList = "<br><h1><div id=\"c1\">" + input1 + "</div>&nbsp vs &nbsp<div id=\"c2\">" + input2 + "</div></h1>"
+      resultList += "<h2>" + full_address + "</h2>";
+      resultList += iframe + "<br>";
 
-      console.log("Weather Underground")
-
-      // build Weather Underground API URL
-      url = "https://api.wunderground.com/api/b5842b6ee6e1e144/geolookup/conditions/q/";
-      url += address + ".json";
-      console.log("API URL:" + url);
-
-      // Weather Underground JSON
-      $.getJSON(url, function(data) {
-        var temp = data.current_observation.temperature_string;
-        var weather = data.current_observation.weather;
-        var lat = data.current_observation.display_location.latitude;
-        var long = data.current_observation.display_location.longitude;
-        var icon = data.current_observation.icon_url;
-
-        resultList += "<li><h2>Weather</h2></li>";
-        resultList += "<li>Temperature: " + temp + "</li>";
-        resultList += "<li>" + weather + "</li>";
-        resultList += "<li><img src=\"" + icon + "\"></li>";
-        //resultList += "<li>Weather Coords: " + lat + "," + long + "</li>";
-        resultList += "</ul>";
-        $("#GG_results").html(resultList);
-
-      });
-
-      $("#YT_input").val("cats");
+      $("#GG_results").html(resultList);
+      $("#results").slideDown();
+      $("#forms").hide();
       youtube();
     });
   });
 
+  function validateInput() {
+    var valid = true;
+    $("#YT_input1").removeAttr('style');
+    $("#YT_input2").removeAttr('style');
+    $("#GG_input").removeAttr('style');
+
+    if ($("#YT_input1").val() === "") {
+      valid = false;
+      $("#YT_input1").attr('style', 'border: 2px solid red;');
+    }
+
+    if ($("#YT_input2").val() === "") {
+      valid = false;
+      $("#YT_input2").attr('style', 'border: 2px solid red;');
+    }
+
+    if ($("#GG_input").val() === "") {
+      valid = false;
+      $("#GG_input").attr('style', 'border: 2px solid red;');
+    }
+
+    return valid;
+  }
+
+  function setHints() {
+    var random = Math.floor(Math.random() * 4);
+
+    switch (random) {
+      case 0:
+        $("#YT_input1").attr('placeholder', 'Pirates');
+        $("#YT_input2").attr('placeholder', 'Ninjas');
+        break;
+      case 1:
+        $("#YT_input1").attr('placeholder', 'Pie');
+        $("#YT_input2").attr('placeholder', 'Cake');
+        break;
+      case 2:
+        $("#YT_input1").attr('placeholder', 'Cats');
+        $("#YT_input2").attr('placeholder', 'Dogs');
+        break;
+      case 3:
+        $("#YT_input1").attr('placeholder', 'Batman');
+        $("#YT_input2").attr('placeholder', 'Superman');
+        break;
+    }
+  }
+
   function youtube() {
-    var input = encodeURIComponent($("#YT_input").val());
-    var radius = "10mi";
     console.log("Youtube")
 
-    // build API URL
-    var url = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=3&key=AIzaSyBW7MzBq1JwCe6Jv-uViDGjvs8rK5jE4wo";
-    url += "&q=" + input;
+    var input1 = encodeURIComponent($("#YT_input1").val());
+    var input2 = encodeURIComponent($("#YT_input2").val());
+    var radius = $("#radius").val() + "mi";
+    $("#resultBox").show();
+
+    // build API URL for input 1
+    var url1 = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=3&key=AIzaSyBW7MzBq1JwCe6Jv-uViDGjvs8rK5jE4wo";
+    url1 += "&q=" + input1;
     if (coords !== "") {
       $("#YT_header").html("Youtube Videos within " + radius + " of " + full_address);
-      url += "&location=" + coords + "&locationRadius=" + radius;
+      url1 += "&location=" + coords + "&locationRadius=" + radius;
     }
-    console.log("API URL:" + url);
+    console.log("API URL:" + url1);
 
-    // JSON
-    $.getJSON(url, function(data) {
-      var resultCount = data["pageInfo"]["totalResults"];
-      var resultList = "<ul><li>Total Results: " + resultCount + "</li>";
+    // build API URL for input 2
+    var url2 = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=3&key=AIzaSyBW7MzBq1JwCe6Jv-uViDGjvs8rK5jE4wo";
+    url2 += "&q=" + input2;
+    if (coords !== "") {
+      $("#YT_header").html("Youtube Videos within " + radius + " of " + full_address);
+      url2 += "&location=" + coords + "&locationRadius=" + radius;
+    }
+    console.log("API URL:" + url2);
 
-      for (var i = 0; i < data["items"].length; i++) {
-        resultList += "<li><b>Title: </b>" + data["items"][i]["snippet"]["title"] + "<br>";
-        resultList += "<b>Description: </b>" + data["items"][i]["snippet"]["description"] + "<br>";
-        resultList += "<a href=\"https://www.youtube.com/watch?v=" + data["items"][i]["id"]["videoId"] + "\" target=\"_blank\">";
-        resultList += "<img src=\"" + data["items"][i]["snippet"]["thumbnails"]["default"]["url"] + "\"></a></li>";
+    var resultCount1;
+    var resultCount2;
+    var resultList1;
+    var resultList2;
+
+    $.ajaxSetup({
+      async: false
+    });
+    // JSON url1
+    $.getJSON(url1, function(data1) {
+      resultCount1 = data1["pageInfo"]["totalResults"];
+      resultList1 = "<ul><li>Total Results: " + resultCount1 + "</li>";
+
+      for (var i = 0; i < data1["items"].length; i++) {
+        resultList1 += "<li><b>Title: </b>" + data1["items"][i]["snippet"]["title"] + "<br>";
+        resultList1 += "<b>Description: </b>" + data1["items"][i]["snippet"]["description"] + "<br>";
+        resultList1 += "<a href=\"https://www.youtube.com/watch?v=" + data1["items"][i]["id"]["videoId"] + "\" target=\"_blank\">";
+        resultList1 += "<img src=\"" + data1["items"][i]["snippet"]["thumbnails"]["default"]["url"] + "\"></a></li>";
       }
-      resultList += "</ul>";
-
-      $("#YT_results").html(resultList);
+      resultList1 += "</ul>";
 
     });
+
+    // JSON url2
+    $.getJSON(url2, function(data2) {
+      resultCount2 = data2["pageInfo"]["totalResults"];
+      resultList2 = "<ul><li>Total Results: " + resultCount2 + "</li>";
+
+      for (var i = 0; i < data2["items"].length; i++) {
+        resultList2 += "<li><b>Title: </b>" + data2["items"][i]["snippet"]["title"] + "<br>";
+        resultList2 += "<b>Description: </b>" + data2["items"][i]["snippet"]["description"] + "<br>";
+        resultList2 += "<a href=\"https://www.youtube.com/watch?v=" + data2["items"][i]["id"]["videoId"] + "\" target=\"_blank\">";
+        resultList2 += "<img src=\"" + data2["items"][i]["snippet"]["thumbnails"]["default"]["url"] + "\"></a></li>";
+      }
+      resultList2 += "</ul>";
+
+
+
+    });
+
+    $.ajaxSetup({
+      async: true
+    });
+
+    if (resultCount1 > resultCount2) {
+      stringBuild = "<h1>"+input1+" wins with "+ resultCount1 + " results</h1>";
+      $("#Match_results").html(stringBuild);
+      $("#YT_results").html(resultList1);
+    }    else {
+      stringBuild = "<h1>"+input2+" wins with "+ resultCount2 + " results</h1>";
+      $("#Match_results").html(stringBuild);
+      $("#YT_results").html(resultList2);
+    }
+
   }
 
   $("#YT_button").click(function(e){
     e.preventDefault();
     youtube();
-  });
-
-  $("#SO_button").click(function(e){
-    // get input
-    var input = encodeURIComponent($("#SO_input").val());
-    console.log("Stack Exchange")
-    console.log("Input: " + input);
-    e.preventDefault();
-
-    // build API URL
-    var url = "https://api.stackexchange.com/2.2/search?order=desc&sort=activity&site=stackoverflow&intitle="
-    url += input;
-    console.log("API URL:" + url);
-
-    // JSON
-    $.getJSON(url, function(data) {
-      var resultList = "<ul>";
-
-      for (var i = 0; i < data.items.length; i++) {
-        var link = data.items[i].link;
-        var title = data.items[i].title;
-        resultList += "<li><a href=\"" + link + "\" target=\"_blank\">" + title + "</a>";
-      }
-
-      resultList += "</ul>";
-      $("#SO_results").html(resultList);
-    });
   });
 });
