@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Change Ready Consulting</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/heroic-features.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">Change Ready Consulting</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="#">Business</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Service</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    
+    <!-- Page Content -->
+    <div class="container" ng-controller="ChangeReady">
+
+      <!-- Jumbotron Header -->
+      <header class="jumbotron my-4">
+        <h1 class="display-3">Change could be Good!</h1>
+        <p class="lead">
+          Change Ready Consulting is here, able, and ready to help you make your much needed business changes.  We know change can be difficult, but we also know it is necessary for improving your business, and increasing your profit margins.  Change Ready Consultants can help you make needed business changes at very little cost to you.
+        </p>
+        <center><h2 class="display-5">Message us Now</h2></center>
+        <form>
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" ng-model="email">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          </div>
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Full Name" ng-model="name">
+          </div>
+          <div class="form-group">
+            <label for="messageArea">Message</label>
+            <textarea class="form-control" id="messageArea" rows="3" ng-model="message"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" ng-click="sendMessage()">Send Message</button>
+        </form>
+      </header>
+
+
+      <!-- Page Features -->
+      <div class="row text-center">
+
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="card">
+            <img class="card-img-top" src="/images/Financials.jpeg" style="height: 250px" alt="">
+            <div class="card-body">
+              <h4 class="card-title">Strategic Planning</h4>
+              <p class="card-text">Change will always require strategic planning</p>
+            </div>
+            <div class="card-footer">
+              <a href="#" class="btn btn-primary">Find Out More!</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="card">
+            <img class="card-img-top" src="/images/teamBuilding.jpg" style="height: 250px" alt="">
+            <div class="card-body">
+              <h4 class="card-title">Team Building</h4>
+              <p class="card-text">Change is best achieved when a team is strong and agile.  Some team building </p>
+            </div>
+            <div class="card-footer">
+              <a href="#" class="btn btn-primary">Find Out More!</a>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="card">
+            <img class="card-img-top" src="/images/Firefighters.jpeg" style="height: 250px" alt="">
+            <div class="card-body">
+              <h4 class="card-title">Professional Coaching</h4>
+              <p class="card-text">Change often requires leadership and good leadership does not come easily. Certain</p>
+            </div>
+            <div class="card-footer">
+              <a href="#" class="btn btn-primary">Find Out More!</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="card">
+            <img class="card-img-top" src="/images/ProcessMapping.jpg" style="height: 250px" alt="">
+            <div class="card-body">
+              <h4 class="card-title">Process Alignment</h4>
+              <p class="card-text">Change can be sweeping or incremental. Subtle changes are best to bring process into </p>
+            </div>
+            <div class="card-footer">
+              <a href="#" class="btn btn-primary">Find Out More!</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; ChangeReadyConsulting.com 2017</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="http://code.angularjs.org/1.2.9/angular.min.js"></script>
+    <script src="controller.js"></script>
+
+  </body>
+
+</html>
